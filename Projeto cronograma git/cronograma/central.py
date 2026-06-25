@@ -1,6 +1,6 @@
 import sistema
 print("Bem-Vindo ao sistema de gerenciamento de tarefas!!!")
-interface = ("Ver tarefas", "Cadastrar tarefas", "Excluir tarefas", "Modificar tarefas", "Sair")
+interface = ("Ver tarefas", "Cadastrar tarefas", "Excluir tarefas", "Modificar tarefas", "Atualizar status", "Sair")
 print("\n")
 TG = sistema.Cronograma()
 TG.dados()
@@ -28,7 +28,12 @@ while True:
         
         TG.modificador(id_inf)
     
-    if user == 5:
+    elif user == 5:
+        id_mod = int(input("Precisamos do ID: "))
+        status_bd = str(input("digite 'v' para mudar o status para completo: ").upper().strip())
+        TG.atualizar_status(id_mod, status_bd)
+    
+    if user == 6:
         usuario = str(input("Deseja sair? S/N ").upper().strip())
         if usuario in "S":
             print("FINALIZANDO...")

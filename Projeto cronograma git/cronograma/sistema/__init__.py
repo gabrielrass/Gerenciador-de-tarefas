@@ -36,6 +36,22 @@ class Cronograma:
         banco_de_dados.commit()#salvar alteração na tabela
         banco_de_dados.close() #fecha a tabela com a alteração
         
+    def atualizar_status(self, id_mod, Status_bd):
+        banco_de_dados = sqlite3.connect("tarefas.db")
+        bd = banco_de_dados.cursor()
+        if Status_bd in "V":
+            Status_bd = True
+        else:
+            Status_bd = False
+            
+        bd.execute("""UPDATE tarefas
+                   SET Status = ?
+                   WHERE ID = ?
+                   """, (Status_bd, id_mod
+                         ))
+        banco_de_dados.commit()
+        banco_de_dados.close()
+        
         
     #MOSTRA AS TAREFAS JÁ CADASTRADAS
     
