@@ -1,7 +1,6 @@
 from rich import print
 from datetime import date
 import sqlite3
-from rich.panel import Panel
 
 class Cronograma:
     def __init__(self, nome = "not", assunto = "Not", status = True):
@@ -68,19 +67,39 @@ class Cronograma:
             
         banco_de_dados.commit()
         
-    def modificador(self, id_inf, novo_nome = '', nova_desc = ''):
+    def modificador(self, id_inf):
         banco_de_dados = sqlite3.connect("tarefas.db")
         bd = banco_de_dados.cursor()
         print(f"ID informado = {id_inf}")
-        bd.execute("""
-                   UPDATE tarefas
-                   SET Nome_da_tarefa = ?,
-                   Descricao = ?
-                   WHERE ID = ?
-                   """, (novo_nome, nova_desc, id_inf
-                         ))
+        esco = str(input("Deseja alterar o nome (A), descrição(B) ou os dois(C)? ").upper().strip())
         
-        if bd.rowcount == 0:
+        if esco in "A":
+            novo_nome = str(input("Novo nome da tarefa: "))
+            bd.execute("""
+                   UPDATE tarefas
+                   SET Nome_da_tarefa = ?
+                   WHERE ID = ?
+                   """, (novo_nome, id_inf
+                         ))
+        elif esco == "B":
+            nova_desc = str(input("Nova descrição: "))
+            bd.execute("""
+                       UPDATE tarefas
+                       SET Descricao = ?
+                       WHERE ID = ?
+                       """, (nova_desc, id_inf
+                             ))
+        elif esco == "C":
+            novo_nome = str(input("Novo nome da tarefa: "))
+            nova_desc = str(input("Nova descrição: "))
+            bd.execute("""
+                       UPDATE tarefas
+                       SET Nome_da_tarefa = ?,
+                       Descricao = ?
+                       WHERE ID = ?
+                       """, (novo_nome, nova_desc, id_inf
+                             ))
+        elif bd.rowcount == 0:
             print("ID não existe!!!")
         else:
             banco_de_dados.commit()

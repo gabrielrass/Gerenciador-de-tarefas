@@ -1,7 +1,9 @@
 import sistema
 print("Bem-Vindo ao sistema de gerenciamento de tarefas!!!")
-interface = ("Ver tarefas", "Cadastrar tarefas", "Excluir tarefas", "Modificar tarefas")
+interface = ("Ver tarefas", "Cadastrar tarefas", "Excluir tarefas", "Modificar tarefas", "Sair")
+print("\n")
 TG = sistema.Cronograma()
+TG.dados()
 while True:
     print("\n")
     for c, v in enumerate(interface):
@@ -19,12 +21,17 @@ while True:
         
     if user == 3:
         user_admin = int(input("Digite o ID que será apagado: "))
-        TG.excluir_tarefa_tarefas(user_admin)
+        TG.excluir_tarefa(user_admin)
     
     if user == 4:
         id_inf = int(input("ID que será editado: "))
-        novo_nome = str(input("Novo nome da tarefa: "))
-        nova_desc = str(input("Nova descrição: "))
         
-        TG.modificador(id_inf, novo_nome, nova_desc)
-    break
+        TG.modificador(id_inf)
+    
+    if user == 5:
+        usuario = str(input("Deseja sair? S/N ").upper().strip())
+        if usuario in "S":
+            print("FINALIZANDO...")
+            break
+        else:
+            print("Vamos continuar os trabalhos!!!")
