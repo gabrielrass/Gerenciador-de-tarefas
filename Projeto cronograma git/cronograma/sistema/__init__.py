@@ -1,6 +1,7 @@
 from rich import print
 from datetime import date
 import sqlite3
+import customtkinter as tk
 
 class Cronograma:
     def __init__(self, nome = "not", assunto = "Not", status = True):
@@ -23,6 +24,8 @@ class Cronograma:
         banco_de_dados.commit()#salvar alteração na tabela
         banco_de_dados.close() #fecha a tabela com a alteração
     
+    #insere os elementos da tabela
+    
     def cadastrar_inf(self):
         
         banco_de_dados = sqlite3.connect("tarefas.db")
@@ -35,6 +38,8 @@ class Cronograma:
         
         banco_de_dados.commit()#salvar alteração na tabela
         banco_de_dados.close() #fecha a tabela com a alteração
+    
+    #Atualiza o status dd tarefa para verdadeiro/feito
         
     def atualizar_status(self, id_mod, Status_bd):
         banco_de_dados = sqlite3.connect("tarefas.db")
@@ -59,19 +64,19 @@ class Cronograma:
         banco_de_dados = sqlite3.connect("tarefas.db")
         bd = banco_de_dados.cursor()
         bd.execute("""SELECT * FROM  tarefas""")
-        for tarefas in bd.fetchall():
-            Id, Nome_da_tarefa, Descricao, Status = tarefas
-            print(f"""Id: {Id}
-            Nome da tarefa: {Nome_da_tarefa}
-            Descrição: {Descricao}
-            Status: {Status}""")
-            print("\n")
-        
-        
+        return bd.fetchall()
+        # for tarefas in bd.fetchall():
+        #     Id, Nome_da_tarefa, Descricao, Status = tarefas
+        #     print(f"""Id: {Id}
+        #     Nome da tarefa: {Nome_da_tarefa}
+        #     Descrição: {Descricao}
+        #     Status: {Status}""")
+        #     print("\n")
+            
+     #excluir IDs...
     def excluir_tarefa(self, user):
         banco_de_dados = sqlite3.connect("tarefas.db")
         bd = banco_de_dados.cursor()
-        #excluir IDs...
         bd.execute("""DELETE FROM tarefas
                    WHERE ID = ?
                    """, (user,))
@@ -83,6 +88,7 @@ class Cronograma:
             
         banco_de_dados.commit()
         
+    #modificar nome e assunto das tarefas por id
     def modificador(self, id_inf):
         banco_de_dados = sqlite3.connect("tarefas.db")
         bd = banco_de_dados.cursor()
