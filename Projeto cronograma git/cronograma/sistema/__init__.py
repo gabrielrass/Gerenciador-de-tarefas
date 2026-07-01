@@ -4,7 +4,7 @@ import sqlite3
 import customtkinter as tk
 
 class Cronograma:
-    def __init__(self, nome = "not", assunto = "Not", status = True):
+    def __init__(self, nome = "not", assunto = "Not", status = False):
         self.Nome_tarefa = nome
         self.descricao = assunto
         self.status = status
